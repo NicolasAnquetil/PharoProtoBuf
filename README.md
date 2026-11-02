@@ -75,3 +75,8 @@ multi-byte UTF-8, strings longer than 127 bytes, all enum values, and nested mes
 2. Reading `descriptor.proto`, then generating Pharo classes from `protoc --descriptor_set_out` output
 3. oneof, maps, proto2 presence rules, merge semantics, unknown-field preservation
 4. Optional: `.proto` parser, well-known types, JSON mapping, Connect/gRPC-Web over HTTP/1.1
+
+## License
+
+MIT, see [LICENSE](LICENSE). The files in `samples/` derived from the protobuf project
+(`addressbook.proto`) stay under their original BSD license.
