@@ -31,6 +31,70 @@ Class {
 	#package : 'Protobuf-Core'
 }
 
+{ #category : 'examples' }
+PBWireReader class >> exampleAddressBook [
+	"Decode samples/addressbook-sample.bin (written by the official protobuf Java example,
+	see samples/addressbook.proto) by hand, field by field, and inspect the result.
+	Each person is a Dictionary with #name, #id, #email, #phones (type -> number) and, when set, #lastUpdated.
+	Assumes the sample file is in current directory, `addressbook-sample.bin`."
+
+	<example>
+	| bytes book people |
+	bytes := 'addressbook-sample.bin' asFileReference binaryReadStream upToEnd.
+	book := self on: bytes.
+	people := OrderedCollection new.
+	[ book atEnd ] whileFalse: [
+			| tag person p |
+			tag := book readTag. "AddressBook field 1 = repeated Person people"
+			person := book readLengthDelimited.
+			"proto3 does not write default values, so set them first"
+			p := Dictionary new.
+			p
+				at: #id put: 0;
+				at: #email put: '';
+				at: #phones put: OrderedCollection new.
+			[ person atEnd ] whileFalse: [
+					| t |
+					t := person readTag.
+					t fieldNumber = 1 ifTrue: [ p at: #name put: person readString ].
+					t fieldNumber = 2 ifTrue: [ p at: #id put: person readInt32 ].
+					t fieldNumber = 3 ifTrue: [ p at: #email put: person readString ].
+					t fieldNumber = 4 ifTrue: [
+							| phone number type |
+							"repeated PhoneNumber phones"
+							phone := person readLengthDelimited.
+							type := #MOBILE. "enum default (0)"
+							[ phone atEnd ] whileFalse: [
+									| pt |
+									pt := phone readTag.
+									pt fieldNumber = 1
+										ifTrue: [ number := phone readString ]
+										ifFalse: [
+												pt fieldNumber = 2
+													ifTrue: [ type := #( #MOBILE #HOME #WORK ) at: phone readEnum + 1 ]
+													ifFalse: [ phone skipField: pt ] ] ].
+							(p at: #phones) add: type -> number ].
+					t fieldNumber = 5 ifTrue: [
+							| ts seconds nanos |
+							"google.protobuf.Timestamp last_updated"
+							ts := person readLengthDelimited.
+							seconds := 0.
+							nanos := 0.
+							[ ts atEnd ] whileFalse: [
+									| tt |
+									tt := ts readTag.
+									tt fieldNumber = 1
+										ifTrue: [ seconds := ts readInt64 ]
+										ifFalse: [
+												tt fieldNumber = 2
+													ifTrue: [ nanos := ts readInt32 ]
+													ifFalse: [ ts skipField: tt ] ] ].
+							p at: #lastUpdated put: (DateAndTime fromUnixTime: seconds) + (Duration nanoSeconds: nanos) ].
+					(t fieldNumber between: 1 and: 5) ifFalse: [ person skipField: t ] ]. "unknown fields"
+			people add: p ].
+	^ people inspect
+]
+
 { #category : 'instance creation' }
 PBWireReader class >> on: aByteArray [
 
