@@ -1,0 +1,96 @@
+people {
+  name: "Alice Martin"
+  id: 1
+  email: "alice@example.com"
+  phones {
+    number: "+33 1 23 45 67 89"
+    type: HOME
+  }
+  phones {
+    number: "+33 6 12 34 56 78"
+  }
+  phones {
+    number: "+33 1 98 76 54 32"
+    type: WORK
+  }
+  last_updated {
+    seconds: 1793635841
+    nanos: 186339308
+  }
+}
+people {
+  name: "Negative Ned"
+  id: -1
+  phones {
+    number: "555-0000"
+    type: WORK
+  }
+  last_updated {
+    seconds: 1793635841
+    nanos: 347903499
+  }
+}
+people {
+  name: "Max Int"
+  id: 2147483647
+  email: "max@example.com"
+}
+people {
+  name: "Min Int"
+  id: -2147483648
+}
+people {
+  name: "Zero Default"
+  phones {
+    number: "555-0001"
+  }
+  last_updated {
+    seconds: 1793635841
+    nanos: 842189707
+  }
+}
+people {
+  name: "\303\211lodie C\305\223ur \346\235\216\345\260\217\351\276\215 \360\237\230\200"
+  id: 150
+  email: "\303\251lodie@exemple.fr"
+  phones {
+    number: "06 00 00 00 00"
+  }
+  last_updated {
+    seconds: 1793635842
+    nanos: 11097116
+  }
+}
+people {
+  name: "Bartholomew-Bartholomew-Bartholomew-Bartholomew-Bartholomew-Bartholomew-Bartholomew-Bartholomew-Bartholomew-Bartholomew-Bartholomew-Bartholomew-"
+  id: 300
+  email: "long.name@example.com"
+  phones {
+    number: "555-0300"
+    type: HOME
+  }
+  phones {
+    number: "555-0301"
+    type: HOME
+  }
+  last_updated {
+    seconds: 1793635842
+    nanos: 199907119
+  }
+}
+people {
+  name: "No Phone"
+  id: 42
+  email: "nophone@example.com"
+}
+people {
+  name: "Unknown Type"
+  id: 7
+  phones {
+    number: "555-0007"
+  }
+  last_updated {
+    seconds: 1793635842
+    nanos: 555991241
+  }
+}
