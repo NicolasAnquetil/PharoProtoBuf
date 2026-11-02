@@ -125,6 +125,13 @@ PBWireWriter >> writeLittleEndian: anUnsignedInteger size: byteCount [
 	1 to: byteCount do: [ :i | stream nextPut: (anUnsignedInteger byteAt: i) ]
 ]
 
+{ #category : 'writing - raw' }
+PBWireWriter >> writeRaw: aByteArray [
+	"Copy already-encoded bytes (e.g. preserved unknown fields) as is."
+
+	stream nextPutAll: aByteArray
+]
+
 { #category : 'writing - fixed' }
 PBWireWriter >> writeSFixed32: anInteger [
 

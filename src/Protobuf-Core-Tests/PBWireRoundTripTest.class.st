@@ -4,8 +4,9 @@ Checks that values written by PBWireWriter are read back unchanged by PBWireRead
 Class {
 	#name : 'PBWireRoundTripTest',
 	#superclass : 'TestCase',
-	#category : 'Protobuf-Core-Tests',
-	#package : 'Protobuf-Core-Tests'
+	#category : 'Protobuf-Core-Tests-Tests',
+	#package : 'Protobuf-Core-Tests',
+	#tag : 'Tests'
 }
 
 { #category : 'helpers' }

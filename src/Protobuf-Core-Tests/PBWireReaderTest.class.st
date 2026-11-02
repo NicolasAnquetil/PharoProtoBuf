@@ -4,8 +4,9 @@ Tests PBWireReader decoding of byte sequences from the protobuf encoding specifi
 Class {
 	#name : 'PBWireReaderTest',
 	#superclass : 'TestCase',
-	#category : 'Protobuf-Core-Tests',
-	#package : 'Protobuf-Core-Tests'
+	#category : 'Protobuf-Core-Tests-Tests',
+	#package : 'Protobuf-Core-Tests',
+	#tag : 'Tests'
 }
 
 { #category : 'tests - skip' }

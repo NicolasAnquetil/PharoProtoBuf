@@ -4,8 +4,9 @@ Tests PBWireWriter against byte sequences from the protobuf encoding specificati
 Class {
 	#name : 'PBWireWriterTest',
 	#superclass : 'TestCase',
-	#category : 'Protobuf-Core-Tests',
-	#package : 'Protobuf-Core-Tests'
+	#category : 'Protobuf-Core-Tests-Tests',
+	#package : 'Protobuf-Core-Tests',
+	#tag : 'Tests'
 }
 
 { #category : 'helpers' }

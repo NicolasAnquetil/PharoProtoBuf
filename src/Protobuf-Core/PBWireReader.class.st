@@ -107,6 +107,13 @@ PBWireReader >> atEnd [
 	^ position >= limit
 ]
 
+{ #category : 'accessing' }
+PBWireReader >> bytesFrom: aMark [
+	"Answer a copy of the raw bytes consumed since aMark (a previous #position)."
+
+	^ bytes copyFrom: aMark + 1 to: position
+]
+
 { #category : 'private' }
 PBWireReader >> ensureAvailable: byteCount [
 
@@ -119,6 +126,13 @@ PBWireReader >> nextByte [
 	position >= limit ifTrue: [ PBWireError signal: 'Unexpected end of input' ].
 	position := position + 1.
 	^ bytes at: position
+]
+
+{ #category : 'accessing' }
+PBWireReader >> position [
+	"Answer the number of bytes consumed so far; use it as a mark for #bytesFrom:."
+
+	^ position
 ]
 
 { #category : 'reading - varint' }
