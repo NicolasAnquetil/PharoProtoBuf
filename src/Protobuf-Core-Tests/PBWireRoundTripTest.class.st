@@ -14,8 +14,8 @@ PBWireRoundTripTest >> assertValues: aCollection roundTripThrough: aSymbol [
 	"aSymbol is a type name such as #Int32: uses writeInt32: and readInt32."
 
 	| writeSelector readSelector |
-	writeSelector := ('write' , aSymbol , ':') asSymbol.
-	readSelector := ('read' , aSymbol) asSymbol.
+	writeSelector := ('write{1}:' format: { aSymbol }) asSymbol.
+	readSelector := ('read{1}' format: { aSymbol }) asSymbol.
 	aCollection do: [ :value |
 			| writer reader |
 			writer := PBWireWriter new.

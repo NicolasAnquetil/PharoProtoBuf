@@ -27,8 +27,9 @@ Class {
 		'position',
 		'limit'
 	],
-	#category : 'Protobuf-Core',
-	#package : 'Protobuf-Core'
+	#category : 'Protobuf-Core-Wire',
+	#package : 'Protobuf-Core',
+	#tag : 'Wire'
 }
 
 { #category : 'examples' }
@@ -63,6 +64,7 @@ PBWireReader class >> exampleAddressBook [
 							| phone number type |
 							"repeated PhoneNumber phones"
 							phone := person readLengthDelimited.
+							number := ''. "string default"
 							type := #MOBILE. "enum default (0)"
 							[ phone atEnd ] whileFalse: [
 									| pt |
@@ -117,7 +119,7 @@ PBWireReader >> bytesFrom: aMark [
 { #category : 'private' }
 PBWireReader >> ensureAvailable: byteCount [
 
-	position + byteCount > limit ifTrue: [ PBWireError signal: 'Length ' , byteCount printString , ' exceeds remaining input' ]
+	position + byteCount > limit ifTrue: [ PBWireError signal: ('Length {1} exceeds remaining input' format: { byteCount }) ]
 ]
 
 { #category : 'private' }
@@ -336,7 +338,9 @@ PBWireReader >> skipGroup: aFieldNumber [
 		tag := self readTag.
 		tag wireType = PBWireType egroup ] whileFalse: [ self skipField: tag ].
 	tag fieldNumber = aFieldNumber ifFalse: [
-		PBWireError signal: 'Group ' , aFieldNumber printString , ' closed by end-group ' , tag fieldNumber printString ]
+			PBWireError signal: ('Group {1} closed by end-group {2}' format: {
+						 aFieldNumber.
+						 tag fieldNumber }) ]
 ]
 
 { #category : 'private' }

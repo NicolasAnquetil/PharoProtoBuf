@@ -23,15 +23,19 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : 'Protobuf-Core',
-	#package : 'Protobuf-Core'
+	#category : 'Protobuf-Core-Wire',
+	#package : 'Protobuf-Core',
+	#tag : 'Wire'
 }
 
 { #category : 'private' }
 PBWireWriter >> check: anInteger between: min and: max [
 
 	(anInteger isInteger and: [ anInteger between: min and: max ]) ifFalse: [
-		PBWireError signal: anInteger printString , ' is outside [' , min printString , ', ' , max printString , ']' ]
+			PBWireError signal: ('{1} is outside [{2}, {3}]' format: {
+						 anInteger.
+						 min.
+						 max }) ]
 ]
 
 { #category : 'accessing' }

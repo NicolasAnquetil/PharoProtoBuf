@@ -4,8 +4,9 @@ I name the protobuf wire types: VARINT 0, I64 1, LEN 2, SGROUP 3, EGROUP 4, I32 
 Class {
 	#name : 'PBWireType',
 	#superclass : 'Object',
-	#category : 'Protobuf-Core',
-	#package : 'Protobuf-Core'
+	#category : 'Protobuf-Core-Wire',
+	#package : 'Protobuf-Core',
+	#tag : 'Wire'
 }
 
 { #category : 'constants' }

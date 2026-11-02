@@ -88,9 +88,9 @@ PBFieldDescriptor >> accepts: aTag [
 PBFieldDescriptor >> isDefault: aValue [
 	"proto3 default for my type. -0.0 is not the default: only +0.0 is."
 
-	(type = #string or: [ type = #bytes ]) ifTrue: [ ^ aValue isEmpty ].
-	type = #bool ifTrue: [ ^ aValue = false ].
-	(type = #float or: [ type = #double ]) ifTrue: [ ^ aValue = 0 and: [ aValue asFloat signBit = 0 ] ].
+	(#( #string #bytes ) includes: type) ifTrue: [ ^ aValue isEmpty ].
+	type = #bool ifTrue: [ ^ aValue not ].
+	(#( #float #double ) includes: type) ifTrue: [ ^ aValue = 0 and: [ aValue asFloat signBit = 0 ] ].
 	^ aValue = 0
 ]
 
@@ -125,10 +125,10 @@ PBFieldDescriptor >> readFrom: aReader [
 	^ aReader perform: self readSelector
 ]
 
-{ #category : 'reading' }
+{ #category : 'accessing' }
 PBFieldDescriptor >> readSelector [
 
-	^ ('read' , (self class scalarTypes at: type) first) asSymbol
+	^ ('read{1}' format: { (self class scalarTypes at: type) first }) asSymbol
 ]
 
 { #category : 'initialization' }
@@ -162,7 +162,7 @@ PBFieldDescriptor >> write: aValue on: aWriter [
 { #category : 'accessing' }
 PBFieldDescriptor >> writeSelector [
 
-	^ ('write' , (self class scalarTypes at: type) first , ':') asSymbol
+	^ ('write{1}:' format: { (self class scalarTypes at: type) first }) asSymbol
 ]
 
 { #category : 'writing' }

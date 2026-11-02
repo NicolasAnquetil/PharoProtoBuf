@@ -37,7 +37,9 @@ PBRepeatedFieldDescriptor >> read: aReader tag: aTag into: aMessage [
 
 	| values packed |
 	values := (aMessage instVarNamed: name) ifNil: [ aMessage instVarNamed: name put: OrderedCollection new ].
-	(element isPackable and: [ aTag wireType = PBWireType len ]) ifFalse: [ ^ values add: (element readFrom: aReader) ].
+	(element isPackable and: [ aTag wireType = PBWireType len ]) ifFalse: [
+			values add: (element readFrom: aReader).
+			^ self ].
 	packed := aReader readLengthDelimited.
 	[ packed atEnd ] whileFalse: [ values add: (element readFrom: packed) ]
 ]

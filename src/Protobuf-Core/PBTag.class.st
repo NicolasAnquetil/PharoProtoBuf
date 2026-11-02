@@ -8,8 +8,9 @@ Class {
 		'fieldNumber',
 		'wireType'
 	],
-	#category : 'Protobuf-Core',
-	#package : 'Protobuf-Core'
+	#category : 'Protobuf-Core-Wire',
+	#package : 'Protobuf-Core',
+	#tag : 'Wire'
 }
 
 { #category : 'instance creation' }
@@ -27,7 +28,12 @@ PBTag >> fieldNumber [
 { #category : 'printing' }
 PBTag >> printOn: aStream [
 
-	aStream << 'PBTag(' << fieldNumber printString << ', ' << wireType printString << ')'
+	aStream
+		<< 'PBTag(';
+		print: fieldNumber;
+		<< ', ';
+		print: wireType;
+		<< ')'
 ]
 
 { #category : 'initialization' }

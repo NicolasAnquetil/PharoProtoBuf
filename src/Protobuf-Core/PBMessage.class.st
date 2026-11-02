@@ -33,7 +33,7 @@ PBMessage >> mergeFrom: aReader [
 			mark := aReader position.
 			tag := aReader readTag.
 			field := descriptor fieldAt: tag fieldNumber ifAbsent: [ nil ].
-			(field notNil and: [ field accepts: tag ])
+			(field isNotNil and: [ field accepts: tag ])
 				ifTrue: [ field read: aReader tag: tag into: self ]
 				ifFalse: [
 						aReader skipField: tag.

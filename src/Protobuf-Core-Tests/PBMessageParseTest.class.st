@@ -35,7 +35,7 @@ PBMessageParseTest >> testEmbeddedMessage [
 	self assert: person name equals: 'A'.
 	self assert: person id equals: 7.
 	self assert: person lastUpdated seconds equals: 1.
-	self assert: (PBExPerson parseFrom: #[ 16r2A 16r00 ]) lastUpdated notNil.
+	self assert: (PBExPerson parseFrom: #[ 16r2A 16r00 ]) lastUpdated isNotNil.
 	self assert: (PBExPerson parseFrom: #[  ]) lastUpdated isNil
 ]
 
