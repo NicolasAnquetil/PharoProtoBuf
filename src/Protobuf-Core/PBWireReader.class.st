@@ -237,8 +237,12 @@ PBWireReader >> readSInt32 [
 
 { #category : 'reading - varint' }
 PBWireReader >> readSInt64 [
+	"A SmallInteger varint is below 2^64 already: the 64-bit mask, a LargeInteger operation, is only needed for longer varints."
 
-	^ self unZigZag: (self readVarint bitAnd: 16rFFFFFFFFFFFFFFFF)
+	| varint |
+	varint := self readVarint.
+	varint class == SmallInteger ifFalse: [ varint := varint bitAnd: 16rFFFFFFFFFFFFFFFF ].
+	^ self unZigZag: varint
 ]
 
 { #category : 'reading - length delimited' }
